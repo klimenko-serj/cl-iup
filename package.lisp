@@ -216,6 +216,31 @@
 :IupTreeSetAttributeHandle
 
 
+;/************************************************************************/
+;/*                      Pre-definided dialogs                           */
+;/************************************************************************/
+
+:IupFileDlg
+:IupMessageDlg
+:IupColorDlg
+:IupFontDlg
+
+:IupGetFile
+:IupMessage
+:IupMessagef
+:IupAlarm
+:IupScanf
+:IupListDialog
+:IupGetText
+:IupGetColor
+
+:IupGetParam
+:IupGetParamv
+
+:IupLayoutDialog
+:IupElementPropertiesDialog
+
+
 
 
 
