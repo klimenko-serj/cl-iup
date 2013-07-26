@@ -3,6 +3,13 @@
 (defpackage #:cl-iup
   (:use #:cl #:cffi)
   (:export
+   :iup-open
+   :with-iup
+   :iup-defcallback
+   :iup-lambda-callback
+   ;;=============================================
+   ;; CFFI
+   ;;
    ;;---------------------------------------------
    ;; Main API                                     
    ;;---------------------------------------------
