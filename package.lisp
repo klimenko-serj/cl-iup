@@ -1,5 +1,5 @@
 ;;;; package.lisp
 
 (defpackage #:cl-iup
-  (:use #:cl))
+  (:use #:cl #:cffi))
 
