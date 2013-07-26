@@ -3,6 +3,13 @@
 (in-package #:cl-iup)
 
 ;;; "cl-iup" goes here. Hacks and glory await!
+
+(define-foreign-library iup
+    (:unix "libiup.so")
+    (T (:default "iup")))
+
+(use-foreign-library iup)
+
 ;;--------------------------------------------------------------------------------------
 ;;======================================================================================
 ;; Main API
