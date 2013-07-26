@@ -7,6 +7,8 @@
    :with-iup
    :iup-defcallback
    :iup-lambda-callback
+   :iup-hbox
+   :iup-vbox
    ;;=============================================
    ;; CFFI
    ;;

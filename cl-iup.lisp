@@ -32,4 +32,11 @@
   (let ((cb-name (gensym "iup-cb")))
     `(cffi:get-callback (cffi:defcallback ,cb-name :int ,args ,body))))
 ;;--------------------------------------------------------------------------------------
+(defmacro iup-vbox (child &rest childs)
+  `(IupVbox ,child ,@(mapcan #'(lambda (x) (list :pointer x)) childs)
+	    :int 0))
+;;--------------------------------------------------------------------------------------
+(defmacro iup-hbox (child &rest childs)
+  `(IupHbox ,child ,@(mapcan #'(lambda (x) (list :pointer x)) childs)
+	    :int 0))
 ;;--------------------------------------------------------------------------------------

@@ -7,8 +7,6 @@
 
 ;;(cffi:defcallback quit-cb :int ()
 ;;  cl-iup:IUP_CLOSE)
-;(iup-defcallback quit-cb ()
-;    cl-iup:IUP_CLOSE)
 
 (iup-defcallback msg-cb ()
   (progn
@@ -23,6 +21,8 @@
 (defparameter *vbox* nil)
 (defparameter *msg-btn* nil)
 (defparameter *list* nil)
+(defparameter *but3* nil)
+
 
 (defun main-test ()
   (with-iup
@@ -30,20 +30,37 @@
       (IupSetCallback *quit-btn* "ACTION" 
 		      (iup-lambda-callback () IUP_CLOSE))
       
-      (setf *msg-btn*  (iupbutton "Test-Message" ""))
+      (setf *msg-btn*  (iupbutton "IUP Version" ""))
       (IupSetCallback *msg-btn* "ACTION" (msg-cb))
-      
+
       (setf *list* (IupList "list_act"))
       (IupSetAttributes 
        *list* 
        "1=Gold, 2=Silver, 3=Bronze, 4=Tecgraf, 5=None, XXX_SPACING=4, VALUE=4, EXPAND=YES")
-      
+
+      (setf *but3*  (IupSetAttributes 
+		     (iupButton "Show selected item" "")
+		     "EXPAND=Vertical"))
+      (IupSetCallback 
+       *but3* "ACTION" 
+       (iup-lambda-callback 
+	() (progn
+	     (IupMessage "Item:" 
+			 (IupGetAttribute
+			  *list*
+			  (IupGetAttribute
+			   *list* "VALUE")))
+	     IUP_DEFAULT)))
+       
+
       (setf *vbox*
-	    (IupVbox 
+	    (iup-vbox
 	     (IupSetAttributes (IupLabel "Test IUP")
-			       "EXPAND=YES, ALIGNMENT=ACENTER") 
-	     :pointer *list*
-	     :pointer (IupHbox *msg-btn* :pointer *quit-btn* :int 0) :int 0))
+			       "EXPAND=HORIZONTAL, ALIGNMENT=ACENTER")
+	     *list*
+	     (iup-hbox *but3*)
+	     (iup-hbox *msg-btn* *quit-btn*)))
+      
       (IupSetAttributes *vbox* "ALIGNMENT=ACENTER, MARGIN=1x1, GAP=5")
       
       (setf *dialog* (IupDialog *vbox*))
