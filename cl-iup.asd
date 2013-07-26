@@ -2,7 +2,7 @@
 
 (asdf:defsystem #:cl-iup
   :serial t
-  :description "Describe cl-iup here"
+  :description "Common Lisp bindings for IUP."
   :author "Klimenko Serj"
   :license "MIT"
   :depends-on (#:cffi)
