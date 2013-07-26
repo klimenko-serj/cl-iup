@@ -130,3 +130,94 @@
 :IupCreatep
 
 
+;/************************************************************************/
+;/*                        Elements                                      */
+;/************************************************************************/
+
+:IupFill
+:IupRadio
+:IupVbox
+:IupVboxv
+:IupZbox
+:IupZboxv
+:IupHbox
+:IupHboxv
+
+:IupNormalizer
+:IupNormalizerv
+
+:IupCbox
+:IupCboxv
+:IupSbox
+:IupSplit
+:IupScrollBox
+:IupGridBox
+:IupGridBoxv
+:IupExpander
+
+:IupFrame
+
+:IupImage
+:IupImageRGB
+:IupImageRGBA
+
+:IupItem
+:IupSubmenu
+:IupSeparator
+:IupMenu
+:IupMenuv
+
+:IupButton
+:IupCanvas
+:IupDialog
+:IupUser
+:IupLabel
+:IupList
+:IupText
+:IupMultiLine
+:IupToggle
+:IupTimer
+:IupClipboard
+:IupProgressBar
+:IupVal
+:IupTabs
+:IupTabsv
+:IupTree
+:IupLink
+
+
+;/* Deprecated controls, use SPIN attribute of IupText */
+:IupSpin
+:IupSpinbox
+
+
+;/* IupImage utility */
+:IupSaveImageAsText
+
+;/* IupText and IupScintilla utilities */
+:IupTextConvertLinColToPos
+:IupTextConvertPosToLinCol
+
+;/* IupText, IupList, IupTree, IupMatrix and IupScintilla utility */
+:IupConvertXYToPos
+
+;/* IupTree utilities */
+:IupTreeSetUserId
+:IupTreeGetUserId
+:IupTreeGetId
+
+;/* Deprecated IupTree utilities, use Iup*AttributeId functions */
+:IupTreeSetAttribute
+:IupTreeStoreAttribute
+:IupTreeGetAttribute
+:IupTreeGetInt
+:IupTreeGetFloat
+:IupTreeSetfAttribute
+:IupTreeSetAttributeHandle
+
+
+
+
+
+
+))
