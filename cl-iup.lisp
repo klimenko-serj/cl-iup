@@ -403,4 +403,247 @@
   &rest)
 ;;--------------------------------------------------------------------------------------
 ;;======================================================================================
+;; Elements
+;;======================================================================================
+;;--------------------------------------------------------------------------------------
+(cffi:defcfun ("IupFill" IupFill) :pointer)
+
+(cffi:defcfun ("IupRadio" IupRadio) :pointer
+  (child :pointer))
+
+(cffi:defcfun ("IupVbox" IupVbox) :pointer
+  (child :pointer)
+  &rest)
+
+(cffi:defcfun ("IupVboxv" IupVboxv) :pointer
+  (children :pointer))
+
+(cffi:defcfun ("IupZbox" IupZbox) :pointer
+  (child :pointer)
+  &rest)
+
+(cffi:defcfun ("IupZboxv" IupZboxv) :pointer
+  (children :pointer))
+
+(cffi:defcfun ("IupHbox" IupHbox) :pointer
+  (child :pointer)
+  &rest)
+
+(cffi:defcfun ("IupHboxv" IupHboxv) :pointer
+  (children :pointer))
+;;--------------------------------------------------------------------------------------
+(cffi:defcfun ("IupNormalizer" IupNormalizer) :pointer
+  (ih_first :pointer)
+  &rest)
+
+(cffi:defcfun ("IupNormalizerv" IupNormalizerv) :pointer
+  (ih_list :pointer))
+;;--------------------------------------------------------------------------------------
+(cffi:defcfun ("IupCbox" IupCbox) :pointer
+  (child :pointer)
+  &rest)
+
+(cffi:defcfun ("IupCboxv" IupCboxv) :pointer
+  (children :pointer))
+
+(cffi:defcfun ("IupSbox" IupSbox) :pointer
+  (child :pointer))
+
+(cffi:defcfun ("IupSplit" IupSplit) :pointer
+  (child1 :pointer)
+  (child2 :pointer))
+
+(cffi:defcfun ("IupScrollBox" IupScrollBox) :pointer
+  (child :pointer))
+
+(cffi:defcfun ("IupGridBox" IupGridBox) :pointer
+  (child :pointer)
+  &rest)
+
+(cffi:defcfun ("IupGridBoxv" IupGridBoxv) :pointer
+  (children :pointer))
+
+(cffi:defcfun ("IupExpander" IupExpander) :pointer
+  (child :pointer))
+;;--------------------------------------------------------------------------------------
+(cffi:defcfun ("IupFrame" IupFrame) :pointer
+  (child :pointer))
+;;--------------------------------------------------------------------------------------
+(cffi:defcfun ("IupImage" IupImage) :pointer
+  (width :int)
+  (height :int)
+  (pixmap :pointer))
+
+(cffi:defcfun ("IupImageRGB" IupImageRGB) :pointer
+  (width :int)
+  (height :int)
+  (pixmap :pointer))
+
+(cffi:defcfun ("IupImageRGBA" IupImageRGBA) :pointer
+  (width :int)
+  (height :int)
+  (pixmap :pointer))
+;;--------------------------------------------------------------------------------------
+(cffi:defcfun ("IupItem" IupItem) :pointer
+  (title :string)
+  (action :string))
+
+(cffi:defcfun ("IupSubmenu" IupSubmenu) :pointer
+  (title :string)
+  (child :pointer))
+
+(cffi:defcfun ("IupSeparator" IupSeparator) :pointer)
+
+(cffi:defcfun ("IupMenu" IupMenu) :pointer
+  (child :pointer)
+  &rest)
+
+(cffi:defcfun ("IupMenuv" IupMenuv) :pointer
+  (children :pointer))
+;;--------------------------------------------------------------------------------------
+(cffi:defcfun ("IupButton" IupButton) :pointer
+  (title :string)
+  (action :string))
+
+(cffi:defcfun ("IupCanvas" IupCanvas) :pointer
+  (action :string))
+
+(cffi:defcfun ("IupDialog" IupDialog) :pointer
+  (child :pointer))
+
+(cffi:defcfun ("IupUser" IupUser) :pointer)
+
+(cffi:defcfun ("IupLabel" IupLabel) :pointer
+  (title :string))
+
+(cffi:defcfun ("IupList" IupList) :pointer
+  (action :string))
+
+(cffi:defcfun ("IupText" IupText) :pointer
+  (action :string))
+
+(cffi:defcfun ("IupMultiLine" IupMultiLine) :pointer
+  (action :string))
+
+(cffi:defcfun ("IupToggle" IupToggle) :pointer
+  (title :string)
+  (action :string))
+
+(cffi:defcfun ("IupTimer" IupTimer) :pointer)
+
+(cffi:defcfun ("IupClipboard" IupClipboard) :pointer)
+
+(cffi:defcfun ("IupProgressBar" IupProgressBar) :pointer)
+
+(cffi:defcfun ("IupVal" IupVal) :pointer
+  (type :string))
+
+(cffi:defcfun ("IupTabs" IupTabs) :pointer
+  (child :pointer)
+  &rest)
+
+(cffi:defcfun ("IupTabsv" IupTabsv) :pointer
+  (children :pointer))
+
+(cffi:defcfun ("IupTree" IupTree) :pointer)
+
+(cffi:defcfun ("IupLink" IupLink) :pointer
+  (url :string)
+  (title :string))
+;;--------------------------------------------------------------------------------------
+(cffi:defcfun ("IupSpin" IupSpin) :pointer)
+
+(cffi:defcfun ("IupSpinbox" IupSpinbox) :pointer
+  (child :pointer))
+;;--------------------------------------------------------------------------------------
+(cffi:defcfun ("IupSaveImageAsText" IupSaveImageAsText) :int
+  (ih :pointer)
+  (file_name :string)
+  (format :string)
+  (name :string))
+;;--------------------------------------------------------------------------------------
+(cffi:defcfun ("IupTextConvertLinColToPos" IupTextConvertLinColToPos) :void
+  (ih :pointer)
+  (lin :int)
+  (col :int)
+  (pos :pointer))
+
+(cffi:defcfun ("IupTextConvertPosToLinCol" IupTextConvertPosToLinCol) :void
+  (ih :pointer)
+  (pos :int)
+  (lin :pointer)
+  (col :pointer))
+;;--------------------------------------------------------------------------------------
+(cffi:defcfun ("IupConvertXYToPos" IupConvertXYToPos) :int
+  (ih :pointer)
+  (x :int)
+  (y :int))
+;;--------------------------------------------------------------------------------------
+(cffi:defcfun ("IupTreeSetUserId" IupTreeSetUserId) :int
+  (ih :pointer)
+  (id :int)
+  (userid :pointer))
+
+(cffi:defcfun ("IupTreeGetUserId" IupTreeGetUserId) :pointer
+  (ih :pointer)
+  (id :int))
+
+(cffi:defcfun ("IupTreeGetId" IupTreeGetId) :int
+  (ih :pointer)
+  (userid :pointer))
+;;--------------------------------------------------------------------------------------
+(cffi:defcfun ("IupTreeSetAttribute" IupTreeSetAttribute) :void
+  (ih :pointer)
+  (name :string)
+  (id :int)
+  (value :string))
+
+(cffi:defcfun ("IupTreeStoreAttribute" IupTreeStoreAttribute) :void
+  (ih :pointer)
+  (name :string)
+  (id :int)
+  (value :string))
+
+(cffi:defcfun ("IupTreeGetAttribute" IupTreeGetAttribute) :string
+  (ih :pointer)
+  (name :string)
+  (id :int))
+
+(cffi:defcfun ("IupTreeGetInt" IupTreeGetInt) :int
+  (ih :pointer)
+  (name :string)
+  (id :int))
+
+(cffi:defcfun ("IupTreeGetFloat" IupTreeGetFloat) :float
+  (ih :pointer)
+  (name :string)
+  (id :int))
+
+(cffi:defcfun ("IupTreeSetfAttribute" IupTreeSetfAttribute) :void
+  (ih :pointer)
+  (name :string)
+  (id :int)
+  (format :string)
+  &rest)
+
+(cffi:defcfun ("IupTreeSetAttributeHandle" IupTreeSetAttributeHandle) :void
+  (ih :pointer)
+  (a :string)
+  (id :int)
+  (ih_named :pointer))
+;;--------------------------------------------------------------------------------------
+;;======================================================================================
+;; 
+;;======================================================================================
+;;--------------------------------------------------------------------------------------
+;;--------------------------------------------------------------------------------------
+;;--------------------------------------------------------------------------------------
+;;--------------------------------------------------------------------------------------
+;;--------------------------------------------------------------------------------------
+;;--------------------------------------------------------------------------------------
+;;--------------------------------------------------------------------------------------
+;;--------------------------------------------------------------------------------------
+;;--------------------------------------------------------------------------------------
+;;--------------------------------------------------------------------------------------
+;;--------------------------------------------------------------------------------------
 
