@@ -11,6 +11,6 @@ It offers a simple API in three basic languages: C, Lua and LED. IUP's purpose i
 
 <h3> Installing IUP </h3>
 
-Download installation archive from <a href='http://www.tecgraf.puc-rio.br/iup/'> Tecgraf site </a>
+Download installation archive from <a href='http://www.tecgraf.puc-rio.br/iup/'> Tecgraf site</a>.
 Unpack it and run './install' script(in *nix) or copy '*.dll' to  'system32' folder.
 
