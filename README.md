@@ -9,7 +9,7 @@ It offers a simple API in three basic languages: C, Lua and LED. IUP's purpose i
 <a href='http://www.tecgraf.puc-rio.br/iup/'> http://www.tecgraf.puc-rio.br/iup/ </a>
 
 
-This library provides Common Lisp bindings(cffi) to IUP.
+<b>CL-IUP</b> provides Common Lisp bindings(cffi) to IUP.
 
 
 
