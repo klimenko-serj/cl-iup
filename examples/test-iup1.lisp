@@ -23,7 +23,6 @@
 (defparameter *list* nil)
 (defparameter *but3* nil)
 
-
 (defun main-test ()
   (with-iup
       (setf *quit-btn*  (iupbutton "Close" ""))
@@ -40,7 +39,7 @@
 
       (setf *but3*  (IupSetAttributes 
 		     (iupButton "Show selected item" "")
-		     "EXPAND=Vertical"))
+		     "EXPAND=Vertical, FLAT=YES"))
       (IupSetCallback 
        *but3* "ACTION" 
        (iup-lambda-callback 
@@ -65,7 +64,8 @@
       
       (setf *dialog* (IupDialog *vbox*))
       (IupSetAttributeHandle *dialog* "DEFAULTESC" *quit-btn*)
-      (IupSetAttributes *dialog* "TITLE =\"TEst IupDialog \", RESIZE=YES")
+      (setf (iup-attribute *dialog* "TITLE") "Test IupDialog!!!")
+      (IupSetAttributes *dialog* "RESIZE=YES")
       
       (IupShow *dialog*)
       (IupMainloop)

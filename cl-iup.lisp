@@ -40,3 +40,11 @@
   `(IupHbox ,child ,@(mapcan #'(lambda (x) (list :pointer x)) childs)
 	    :int 0))
 ;;--------------------------------------------------------------------------------------
+(defun iup-attribute (ih attr-name)
+  (iupGetAttribute ih attr-name))
+
+(defun (setf iup-attribute) (val ih attr-name)
+  (iupSetAttribute ih attr-name (foreign-string-alloc val)))
+;;--------------------------------------------------------------------------------------
+
+;;--------------------------------------------------------------------------------------
