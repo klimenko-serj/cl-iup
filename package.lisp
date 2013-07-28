@@ -9,7 +9,9 @@
    :iup-lambda-callback
    :iup-hbox
    :iup-vbox
+   :iup-tabs
    :iup-attribute
+   :iup-set-attributes
    ;;=============================================
    ;; CFFI
    ;;

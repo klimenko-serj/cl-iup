@@ -32,13 +32,16 @@
   (let ((cb-name (gensym "iup-cb")))
     `(cffi:get-callback (cffi:defcallback ,cb-name :int ,args ,body))))
 ;;--------------------------------------------------------------------------------------
-(defmacro iup-vbox (child &rest childs)
-  `(IupVbox ,child ,@(mapcan #'(lambda (x) (list :pointer x)) childs)
-	    :int 0))
+(defmacro %def-iup-container-macro (iupname iup-name)
+  `(defmacro ,iup-name (child &rest childs)
+     (append (list ',iupname child) 
+	     (mapcan #'(lambda (x) 
+			 (list :pointer x)) childs) '(:int 0))))
+
+(%def-iup-container-macro iupvbox iup-vbox)
+(%def-iup-container-macro iuphbox iup-hbox)
+(%def-iup-container-macro iuptabs iup-tabs)
 ;;--------------------------------------------------------------------------------------
-(defmacro iup-hbox (child &rest childs)
-  `(IupHbox ,child ,@(mapcan #'(lambda (x) (list :pointer x)) childs)
-	    :int 0))
 ;;--------------------------------------------------------------------------------------
 (defun iup-attribute (ih attr-name)
   (iupGetAttribute ih attr-name))
@@ -46,5 +49,10 @@
 (defun (setf iup-attribute) (val ih attr-name)
   (iupSetAttribute ih attr-name (foreign-string-alloc val)))
 ;;--------------------------------------------------------------------------------------
-
+(defun iup-set-attributes (ih &rest attributes)
+  (iupsetattributes 
+   ih 
+   (format nil
+	   "~{~A=\"~A\"~^, ~}"
+	   attributes)))
 ;;--------------------------------------------------------------------------------------
