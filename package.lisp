@@ -6,12 +6,17 @@
    :iup-open
    :with-iup
    :iup-defcallback
+   :iup-defcallback-default
+   :iup-callback
+   :iup-set-callback
    :iup-lambda-callback
    :iup-hbox
    :iup-vbox
+   :iup-grid-box
    :iup-tabs
    :iup-attribute
    :iup-set-attributes
+   
    ;;=============================================
    ;; CFFI
    ;;

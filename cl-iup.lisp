@@ -22,11 +22,28 @@
 	  ,@body)
      (IupClose)))
 ;;--------------------------------------------------------------------------------------
-(defmacro iup-defcallback (name args body)
-  (let ((cb-name (gensym)))
+(defun get-fn-args (cb-args)
+  (mapcar #'first cb-args))
+   
+(defmacro iup-defcallback (name args &body body)
+  (let ((cb-name (gensym "iup-cb"))
+	(fn-args (get-fn-args args)))
     `(progn
-       (defmacro ,name () (cffi:callback ,cb-name))
-       (cffi:defcallback ,cb-name :int ,args ,body))))
+       (defun ,name ,fn-args ,@body)
+       (cffi:defcallback ,cb-name :int ,args ,@body)
+       (setf (get ',name 'cb) (lambda () (cffi:callback ,cb-name))))))
+;;--------------------------------------------------------------------------------------
+(defmacro iup-defcallback-default (name args &body body)
+  `(iup-defcallback ,name ,args 
+     (progn
+       ,@body
+       IUP_DEFAULT)))     
+;;--------------------------------------------------------------------------------------
+(defmacro iup-callback (name)
+  `(funcall (get ',name 'cb)))
+;;--------------------------------------------------------------------------------------
+(defmacro iup-set-callback (ih name callbck)
+  `(iupSetCallback ,ih ,name (iup-callback ,callbck)))
 ;;--------------------------------------------------------------------------------------
 (defmacro iup-lambda-callback (args body)
   (let ((cb-name (gensym "iup-cb")))
@@ -41,6 +58,7 @@
 (%def-iup-container-macro iupvbox iup-vbox)
 (%def-iup-container-macro iuphbox iup-hbox)
 (%def-iup-container-macro iuptabs iup-tabs)
+(%def-iup-container-macro iupgridbox iup-grid-box)
 ;;--------------------------------------------------------------------------------------
 ;;--------------------------------------------------------------------------------------
 (defun iup-attribute (ih attr-name)
