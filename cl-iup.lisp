@@ -22,28 +22,40 @@
 	  ,@body)
      (IupClose)))
 ;;--------------------------------------------------------------------------------------
-(defun get-fn-args (cb-args)
-  (mapcar #'first cb-args))
+;; (defun get-fn-args (cb-args)
+;;   (mapcar #'first cb-args))
    
-(defmacro iup-defcallback (name args &body body)
-  (let ((cb-name (intern (concatenate 'string "%" (string name) (string '#:-callback))))
-	(fn-args (get-fn-args args)))
+;; (defmacro iup-defcallback (name args &body body)
+;;   (let ((cb-name (intern (concatenate 'string "%" (string name) (string '#:-callback))))
+;; 	(fn-args (get-fn-args args)))
+;;     `(progn
+;;        (defun ,name ,fn-args ,@body)
+;;        (cffi:defcallback ,cb-name :int ,args ,@body)
+;;        (setf (get ',name 'cb) (lambda () (cffi:get-callback ',cb-name))))))
+;; ;;--------------------------------------------------------------------------------------
+;; (defmacro iup-defcallback-default (name args &body body)
+;;   `(iup-defcallback ,name ,args 
+;;      (progn
+;;        ,@body
+;;        IUP_DEFAULT)))     
+;; ;;--------------------------------------------------------------------------------------
+;; (defmacro iup-callback (name)
+;;   `(funcall (get ',name 'cb)))
+;; ;;--------------------------------------------------------------------------------------
+;; (defmacro iup-set-callback (ih name callbck)
+;;   `(iupSetCallback ,ih ,name (iup-callback ,callbck)))
+;;--------------------------------------------------------------------------------------
+(defmacro iup-defcallback (name args body)
+  (let ((cb-name (intern (concatenate 'string "%" (string name) (string '#:-callback)))))
     `(progn
-       (defun ,name ,fn-args ,@body)
-       (cffi:defcallback ,cb-name :int ,args ,@body)
-       (setf (get ',name 'cb) (lambda () (cffi:get-callback ',cb-name))))))
+       (cffi:defcallback ,cb-name :int ,args ,body)
+       (define-symbol-macro ,name (cffi:get-callback ',cb-name)))))
 ;;--------------------------------------------------------------------------------------
 (defmacro iup-defcallback-default (name args &body body)
   `(iup-defcallback ,name ,args 
      (progn
        ,@body
        IUP_DEFAULT)))     
-;;--------------------------------------------------------------------------------------
-(defmacro iup-callback (name)
-  `(funcall (get ',name 'cb)))
-;;--------------------------------------------------------------------------------------
-(defmacro iup-set-callback (ih name callbck)
-  `(iupSetCallback ,ih ,name (iup-callback ,callbck)))
 ;;--------------------------------------------------------------------------------------
 (defmacro iup-lambda-callback (args body)
   (let ((cb-name (gensym "iup-cb")))

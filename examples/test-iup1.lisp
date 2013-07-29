@@ -31,7 +31,7 @@
 		      (iup-lambda-callback () IUP_CLOSE))
       
       (setf *msg-btn*  (iupbutton "IUP Version" ""))
-      (Iup-Set-Callback *msg-btn* "ACTION" msg-cb)
+      (IupSetCallback *msg-btn* "ACTION" msg-cb)
 
       (setf *list* (IupList "list_act"))
       (IupSetAttributes 
@@ -74,4 +74,4 @@
 
 ;;(main-test)
 ;;(sb-ext:quit)
-(sb-ext:save-lisp-and-die "test-iup.core" :toplevel #'main-test)
+(sb-ext:save-lisp-and-die "test-iup" :toplevel #'main-test :executable t)
