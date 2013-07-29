@@ -7,8 +7,8 @@
    :with-iup
    :iup-defcallback
    :iup-defcallback-default
-   :iup-callback
-   :iup-set-callback
+   ;; :iup-callback
+   ;; :iup-set-callback
    :iup-lambda-callback
    :iup-hbox
    :iup-vbox
