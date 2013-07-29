@@ -1,7 +1,8 @@
 (ql:quickload "cl-iup")
 
 (defpackage #:test-iup
-  (:use :cl :cl-iup))
+  (:use :cl :cl-iup)
+  (:export :main-test))
 
 (in-package #:test-iup)
 
@@ -30,7 +31,7 @@
 		      (iup-lambda-callback () IUP_CLOSE))
       
       (setf *msg-btn*  (iupbutton "IUP Version" ""))
-      (IupSetCallback *msg-btn* "ACTION" (msg-cb))
+      (Iup-Set-Callback *msg-btn* "ACTION" msg-cb)
 
       (setf *list* (IupList "list_act"))
       (IupSetAttributes 
@@ -71,5 +72,6 @@
       (IupMainloop)
       (IupDestroy *dialog*)))
 
-(main-test)
-(sb-ext:quit)
+;;(main-test)
+;;(sb-ext:quit)
+(sb-ext:save-lisp-and-die "test-iup.core" :toplevel #'main-test)

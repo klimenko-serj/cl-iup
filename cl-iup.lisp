@@ -26,12 +26,12 @@
   (mapcar #'first cb-args))
    
 (defmacro iup-defcallback (name args &body body)
-  (let ((cb-name (gensym "iup-cb"))
+  (let ((cb-name (intern (concatenate 'string "%" (string name) (string '#:-callback))))
 	(fn-args (get-fn-args args)))
     `(progn
        (defun ,name ,fn-args ,@body)
        (cffi:defcallback ,cb-name :int ,args ,@body)
-       (setf (get ',name 'cb) (lambda () (cffi:callback ,cb-name))))))
+       (setf (get ',name 'cb) (lambda () (cffi:get-callback ',cb-name))))))
 ;;--------------------------------------------------------------------------------------
 (defmacro iup-defcallback-default (name args &body body)
   `(iup-defcallback ,name ,args 
