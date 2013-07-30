@@ -42,7 +42,7 @@ Unpack it and run './install' script(in Linux) or copy '.dll' to  'system32' fol
                       (iup-lambda-callback () IUP_CLOSE))
       
       (setf *msg-btn* (iupbutton "IUP Version" ""))
-      (IupSetCallback *msg-btn* "ACTION" (msg-cb))
+      (IupSetCallback *msg-btn* "ACTION" msg-cb)
 
       (setf *vbox*
             (iup-vbox
