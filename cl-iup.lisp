@@ -22,8 +22,8 @@
 	  ,@body)
      (IupClose)))
 ;;--------------------------------------------------------------------------------------
-;; (defun get-fn-args (cb-args)
-;;   (mapcar #'first cb-args))
+(defun get-fn-args (cb-args)
+  (mapcar #'first cb-args))
    
 ;; (defmacro iup-defcallback (name args &body body)
 ;;   (let ((cb-name (intern (concatenate 'string "%" (string name) (string '#:-callback))))
@@ -45,10 +45,12 @@
 ;; (defmacro iup-set-callback (ih name callbck)
 ;;   `(iupSetCallback ,ih ,name (iup-callback ,callbck)))
 ;;--------------------------------------------------------------------------------------
-(defmacro iup-defcallback (name args body)
-  (let ((cb-name (intern (concatenate 'string "%" (string name) (string '#:-callback)))))
+(defmacro iup-defcallback (name args &body body)
+  (let ((cb-name (intern (concatenate 'string "%" (string name) (string '#:-callback))))
+	(fn-args (get-fn-args args)))
     `(progn
-       (cffi:defcallback ,cb-name :int ,args ,body)
+       (defun ,name ,fn-args ,@body)
+       (cffi:defcallback ,cb-name :int ,args ,@body)
        (define-symbol-macro ,name (cffi:get-callback ',cb-name)))))
 ;;--------------------------------------------------------------------------------------
 (defmacro iup-defcallback-default (name args &body body)
