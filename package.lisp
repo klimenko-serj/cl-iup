@@ -7,6 +7,10 @@
    :with-iup
    :iup-defcallback
    :iup-defcallback-default
+   :iup-add-event-connection
+   :iup-defevent
+   :iup-defevent-default
+   :iup-set-all-events
    ;; :iup-callback
    ;; :iup-set-callback
    :iup-lambda-callback
@@ -16,6 +20,7 @@
    :iup-tabs
    :iup-attribute
    :iup-set-attributes
+
    
    ;;=============================================
    ;; CFFI

@@ -25,26 +25,6 @@
 (defun get-fn-args (cb-args)
   (mapcar #'first cb-args))
    
-;; (defmacro iup-defcallback (name args &body body)
-;;   (let ((cb-name (intern (concatenate 'string "%" (string name) (string '#:-callback))))
-;; 	(fn-args (get-fn-args args)))
-;;     `(progn
-;;        (defun ,name ,fn-args ,@body)
-;;        (cffi:defcallback ,cb-name :int ,args ,@body)
-;;        (setf (get ',name 'cb) (lambda () (cffi:get-callback ',cb-name))))))
-;; ;;--------------------------------------------------------------------------------------
-;; (defmacro iup-defcallback-default (name args &body body)
-;;   `(iup-defcallback ,name ,args 
-;;      (progn
-;;        ,@body
-;;        IUP_DEFAULT)))     
-;; ;;--------------------------------------------------------------------------------------
-;; (defmacro iup-callback (name)
-;;   `(funcall (get ',name 'cb)))
-;; ;;--------------------------------------------------------------------------------------
-;; (defmacro iup-set-callback (ih name callbck)
-;;   `(iupSetCallback ,ih ,name (iup-callback ,callbck)))
-;;--------------------------------------------------------------------------------------
 (defmacro iup-defcallback (name args &body body)
   (let ((cb-name (intern (concatenate 'string "%" (string name) (string '#:-callback))))
 	(fn-args (get-fn-args args)))
@@ -62,6 +42,46 @@
 (defmacro iup-lambda-callback (args body)
   (let ((cb-name (gensym "iup-cb")))
     `(cffi:get-callback (cffi:defcallback ,cb-name :int ,args ,body))))
+;;--------------------------------------------------------------------------------------
+;=======================================================================================
+(defparameter *event-connections* nil)
+;;--------------------------------------------------------------------------------------
+(defun iup-add-event-connection (object-name action cb-name)
+  (pushnew (list object-name action cb-name) *event-connections* :test #'equal))
+;;--------------------------------------------------------------------------------------
+(defmacro iup-defevent ((object &key (action "ACTION") 
+				(name (intern (concatenate 
+					       'string 
+					       (string-trim "*" (string object)) 
+					       "-" action)))
+				(args nil)) &body body)
+  (let ((cb-name (intern (concatenate 'string "%" (string name) (string '#:-callback))))
+	(fn-args (get-fn-args args)))
+    `(progn
+       (iup-add-event-connection ',object ,action ',cb-name)
+       (defun ,name ,fn-args ,@body)
+       (cffi:defcallback ,cb-name :int ,args (,name ,@fn-args))
+       (define-symbol-macro ,name (cffi:get-callback ',cb-name)))))
+
+(defmacro iup-defevent-default ((object &key 
+					(action "ACTION") 
+					(name (intern (concatenate 
+						       'string 
+						       (string-trim "*" (string object)) 
+						       "-" action)))
+					(args nil)) &body body)
+  `(iup-defevent (,object :action ,action :name ,name :args ,args)
+		 (progn
+		   ,@body
+		   IUP_DEFAULT)))
+;;--------------------------------------------------------------------------------------
+(defun iup-set-all-events ()
+  (mapcar #'(lambda (x)
+	      (iupSetCallback (symbol-value (first x))
+	       		      (second x)
+	       		      (cffi:get-callback (print (third x)))))
+	  *event-connections*))
+;=======================================================================================
 ;;--------------------------------------------------------------------------------------
 (defmacro %def-iup-container-macro (iupname iup-name)
   `(defmacro ,iup-name (child &rest childs)
