@@ -50,7 +50,7 @@
 	(fn-args (get-fn-args args)))
     `(progn
        (defun ,name ,fn-args ,@body)
-       (cffi:defcallback ,cb-name :int ,args ,@body)
+       (cffi:defcallback ,cb-name :int ,args (,name ,@fn-args))
        (define-symbol-macro ,name (cffi:get-callback ',cb-name)))))
 ;;--------------------------------------------------------------------------------------
 (defmacro iup-defcallback-default (name args &body body)
