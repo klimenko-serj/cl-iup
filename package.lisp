@@ -21,6 +21,7 @@
    :iup-attribute
    :iup-set-attributes
 
+   :iup-defgui
    
    ;;=============================================
    ;; CFFI

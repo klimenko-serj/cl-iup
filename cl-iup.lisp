@@ -111,3 +111,62 @@
   ;; 	   "~{~A=\"~A\"~^, ~}"
   ;; 	   attributes)))
 ;;--------------------------------------------------------------------------------------
+;=======================================================================================
+;; IUP-DEFGUI
+;=======================================================================================
+;;--------------------------------------------------------------------------------------
+
+(defun %get-name/class/attr (lst)
+  (if (eq '= (second lst))
+      (values (first lst)
+	      (third lst)
+	      (cdddr lst))
+      (values nil
+	      (first lst)
+	      (rest lst))))
+;;--------------------------------------------------------------------------------------
+(defun %childs (args &optional (curr nil))
+  (cond ((null args) (values nil curr))
+	((and (symbolp (first args))
+	      (string= (string (first args)) "<<")) 
+;;	((eq '<< (first args))
+	 (values (rest args) curr))
+	(T (%childs (rest args) (append curr (list (first args)))))))
+;;--------------------------------------------------------------------------------------
+(defun %iup-defgui-defparams (args)
+  (append 
+   (when (eq '= (second args)) (list (first args)))
+   (mapcan #'%iup-defgui-defparams
+	   (%childs args))))
+;;--------------------------------------------------------------------------------------
+(defun %iup-defgui-defun-lets/sets (args &optional parent)
+  (multiple-value-bind (chlds curr) (%childs args)
+    (multiple-value-bind (name clss attr) (%get-name/class/attr curr)
+      (let ((lets nil) (sets nil))
+	(when (null name)
+	  (setf name (gensym "%iup-gui-component-"))
+	  (push name lets))
+	(setf sets
+	      (append 
+	       sets
+	       (list `(setf ,name (iupCreate ,clss)))
+	       (when attr (list `(iup-set-attributes ,name ,@attr)))
+	       (when parent (list `(iupAppend ,parent ,name)))))
+	(iter (for ch in chlds)
+	      (multiple-value-bind (l s) (%iup-defgui-defun-lets/sets ch name)
+		(when l (setf lets (append lets l)))
+		(when s (setf sets (append sets s)))))
+	(values lets sets name)))))
+;;--------------------------------------------------------------------------------------
+(defmacro iup-defgui (fname args &body iup-dsl)
+  `(progn 
+     ,@(mapcar #'(lambda (x) `(defparameter ,x nil)) (%iup-defgui-defparams iup-dsl))
+     (defun ,fname ,args
+       ,(multiple-value-bind 
+	 (lts sts fin) (%iup-defgui-defun-lets/sets iup-dsl)
+	 `(let (,@(mapcar #'(lambda (x) `(,x nil)) lts))
+	    ,@sts
+	    ,fin)))))
+;;--------------------------------------------------------------------------------------
+;=======================================================================================
+;;--------------------------------------------------------------------------------------
