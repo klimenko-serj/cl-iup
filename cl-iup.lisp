@@ -95,16 +95,19 @@
 (%def-iup-container-macro iupgridbox iup-grid-box)
 ;;--------------------------------------------------------------------------------------
 ;;--------------------------------------------------------------------------------------
-(defun iup-attribute (ih attr-name)
+(defun iup-attribute (ih &optional (attr-name "VALUE"))
   (iupGetAttribute ih attr-name))
 
-(defun (setf iup-attribute) (val ih attr-name)
-  (iupSetAttribute ih attr-name (foreign-string-alloc val)))
+(defun (setf iup-attribute) (val ih &optional (attr-name "VALUE"))
+  (iupStoreAttribute ih (format nil "~A" attr-name) (format nil "~A" val)))
 ;;--------------------------------------------------------------------------------------
 (defun iup-set-attributes (ih &rest attributes)
-  (iupsetattributes 
-   ih 
-   (format nil
-	   "~{~A=\"~A\"~^, ~}"
-	   attributes)))
+  (iter (for (a v) on attributes by #'cddr)
+	(setf (iup-attribute ih a) v)
+	(finally (return ih))))
+  ;; (iupsetattributes 
+  ;;  ih 
+  ;;  (format nil
+  ;; 	   "~{~A=\"~A\"~^, ~}"
+  ;; 	   attributes)))
 ;;--------------------------------------------------------------------------------------

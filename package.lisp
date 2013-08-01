@@ -1,7 +1,7 @@
 ;;;; package.lisp
 
 (defpackage #:cl-iup
-  (:use #:cl #:cffi)
+  (:use #:cl #:cffi #:iterate)
   (:export
    :iup-open
    :with-iup
