@@ -46,7 +46,7 @@
 ;=======================================================================================
 (defparameter *event-connections* nil)
 ;;--------------------------------------------------------------------------------------
-(defun iup-add-event-connection (object-name action cb-name)
+(defun iup-register-event (object-name action cb-name)
   (pushnew (list object-name action cb-name) *event-connections* :test #'equal))
 ;;--------------------------------------------------------------------------------------
 (defmacro iup-defevent ((object &key (action "ACTION") 
@@ -58,7 +58,7 @@
   (let ((cb-name (intern (concatenate 'string "%" (string name) (string '#:-callback))))
 	(fn-args (get-fn-args args)))
     `(progn
-       (iup-add-event-connection ',object ,action ',cb-name)
+       (iup-register-event ',object ,action ',cb-name)
        (defun ,name ,fn-args ,@body)
        (cffi:defcallback ,cb-name :int ,args (,name ,@fn-args))
        (define-symbol-macro ,name (cffi:get-callback ',cb-name)))))
