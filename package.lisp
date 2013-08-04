@@ -7,12 +7,12 @@
    :with-iup
    :iup-defcallback
    :iup-defcallback-default
+
    :iup-register-event
    :iup-defevent
    :iup-defevent-default
    :iup-set-all-events
-   ;; :iup-callback
-   ;; :iup-set-callback
+
    :iup-lambda-callback
    :iup-hbox
    :iup-vbox
@@ -22,7 +22,7 @@
    :iup-set-attributes
 
    :iup-defgui
-   
+   :iup-defgui-template
    ;;=============================================
    ;; CFFI
    ;;

@@ -1,5 +1,4 @@
 (ql:quickload "cl-iup")
-
 (defpackage #:test-iup
   (:use :cl :cl-iup)
   (:export :main-test))
